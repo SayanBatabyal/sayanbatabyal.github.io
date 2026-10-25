@@ -1,0 +1,279 @@
+/* Site styles */
+
+body {
+    font-family:Helvetica, sans-serif;
+    margin:auto;
+    padding:15px;
+    margin-top:-20px;
+    max-width:700px;
+    font-size:16px;
+    text-align:left;
+    background-color:white;
+    position:relative;
+}
+
+sup {
+    font-size: x-small;
+    line-height: 0.0;
+}
+
+sub {
+    font-size: x-small;
+} 
+
+a {
+    text-decoration:none;
+}
+
+nav {
+    display:flex;
+    gap:1.25rem;
+    align-items:center;
+}
+
+nav a {
+    padding:0.45rem 0.1rem;
+    border-bottom:2px solid transparent;
+    color:#333;
+    font-weight:600;
+    transition:color 150ms ease, border-color 150ms ease;
+}
+
+nav a:hover,
+nav a[aria-current="page"] {
+    color:#176b57;
+    border-bottom-color:#176b57;
+}
+
+nav a:focus-visible {
+    outline:2px solid #176b57;
+    outline-offset:3px;
+}
+
+li {
+    margin:0.25em;
+    font-size:96%;
+}
+
+h1 {
+    margin-top:0.8em;
+    margin-bottom:0.8em;
+    font-size:1.5em;
+}
+
+h1.blogtitle {
+    margin-bottom:0.0em;
+}
+
+h2 {
+    margin-top:1.4em;
+    margin-bottom:0.25em;
+    font-size:1.35em;
+}
+
+h3, h4 {
+    margin-top:1.4em;
+    margin-bottom:0.25em;
+}
+
+hr {
+    margin-top:0.75em;
+    margin-bottom:0.75em;
+}
+
+.footer-divider {
+    border:0;
+    border-top:1px dotted #999;
+    margin-top:1.5em;
+    margin-bottom:0.75em;
+}
+
+td {
+    border-bottom:2px solid #CCCCCC;
+}
+
+pre {
+    overflow-x:auto;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.editor {
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+p {
+    line-height:1.15em;
+    margin-bottom:1.15em;
+}
+
+ul {
+    margin-bottom:1.35em;
+}
+
+blockquote {
+    color: navy;
+    text-align: center;
+    font-style: italic;
+    background: #dddddd;
+    border-radius: 8px;
+    margin: auto;
+    margin-top: 1.4em;
+    margin-bottom: 1.4em;
+    padding: 0.6em 8px;
+    width: 80%;
+}
+
+blockquote p {
+    display: inline;
+}
+
+.quote-entry {
+    margin:1.5em 0;
+    padding:0 0 0 1.25em;
+    border-left:2px solid #444;
+}
+
+.quote-text {
+    margin:0 0 0.9em;
+    color:#222;
+    /* font-family:Georgia, "Times New Roman", serif; */
+    font-size:0.9em;
+    line-height:1.45;
+}
+
+.quote-entry figcaption {
+    color:#555;
+    font-size:0.9em;
+    line-height:1.45;
+    text-align:right;
+}
+
+.book-year {
+    margin:1.5em 0;
+}
+
+.book-year h2 {
+    margin-top:0;
+    padding-bottom:0.35em;
+    border-bottom:1px solid #ccc;
+}
+
+.book-list {
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));
+    gap:0.5em 1.5em;
+}
+
+.book-item {
+    display:grid;
+    grid-template-columns:72px minmax(0, 1fr);
+    align-items:start;
+    gap:0.85em;
+    margin:0.75em 0 1em;
+}
+
+.book-item--no-cover {
+    grid-template-columns:minmax(0, 1fr);
+}
+
+.book-cover {
+    width:72px;
+    aspect-ratio:2 / 3;
+    object-fit:cover;
+    border:1px solid #ddd;
+    background:#f2f2f2;
+}
+
+.book-title {
+    margin:0 0 0.35em;
+    font-size:1em;
+}
+
+.book-author,
+.book-publisher,
+.book-completed {
+    margin:0.2em 0;
+    font-size:0.9em;
+    line-height:1.35;
+}
+
+.dense p {
+    margin-top:0.2em;
+    margin-bottom:0em;
+    line-height:1.3em;
+}
+
+.news li {
+    font-size:90%;
+}
+
+.right {
+    text-align:right;
+    margin-right:40px;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+.card {
+    padding: 12px;
+}
+
+.headshot {
+    width: 172px;
+    height: 200px; 
+    margin: 0px 0px 0 0;
+    border-radius: 10%;
+    object-fit: cover; 
+    object-position: 0% 8%;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.text-container {
+    flex: 2;
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.photo-container {
+    flex-basis: 100px;
+    margin: 20px 20px 10px 35px;
+}
+
+.links {
+    margin-bottom: 1em;
+}
+
+/* For mobile */
+@media only screen and (max-width: 540px) {
+    .photo-container {
+        margin-left: 0px;
+    }
+
+    .text-container {
+        margin-top: -1em;
+    }
+
+    .links {
+        margin-bottom: 0; 
+    }
+}
+
+/* Helper rules added for the publication and blog lists */
+.entry { margin: 0.8em 0 1.1em; }
+.entry .title { font-weight: bold; }
+.entry .authors { font-size: 0.95em; }
+.entry .venue { font-style: italic; font-size: 0.95em; }
+.award { font-weight: bold; color: #8a5a00; font-size: 0.9em; }
+.blog li .date { color: #666; font-size: 0.9em; margin-left: 0.25em; }

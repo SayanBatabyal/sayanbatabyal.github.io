@@ -1,0 +1,47 @@
+[
+    {
+    "year": 2026,
+    "books": [
+      {
+        "title": "मुसाफिर Cafe",
+        "author": "Divya P. Dubey",
+        "publisher": "Hind Yugm",
+        "completed": "April 2026",
+        "image": "images/book-musafir-cafe.webp",
+        "imageAlt": "Cover of मुसाफिर Cafe",
+        "lang": "hi"
+      }
+    ]
+  },
+  {
+    "year": 2025,
+    "books": [
+      {
+        "title": "The Metamorphosis",
+        "author": "Franz Kafka",
+        "details": "Translated by Stanley Appelbaum",
+        "publisher": "New York: Dover Publications",
+        "completed": "May 2025",
+        "image": "images/book-metamorphosis.jpg",
+        "imageAlt": "Cover of The Metamorphosis"
+      },
+      {
+        "title": "गुनाहों का देवता",
+        "author": "Dharamvir Bharati",
+        "publisher": "Lokbharti Prakashan",
+        "completed": "July 2025",
+        "image": "images/book-gunahon-ka-devta.jpg",
+        "imageAlt": "Cover of गुनाहों का देवता",
+        "lang": "hi"
+      },
+      {
+        "title": "White Nights",
+        "author": "Fyodor Dostoevsky",
+        "publisher": "Penguin Classics",
+        "completed": "September 2025",
+        "image": "images/book-white-nights.webp",
+        "imageAlt": "Cover of White Nights"
+      }
+    ]
+  }
+]
