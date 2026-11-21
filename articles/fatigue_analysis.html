@@ -3,66 +3,318 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sayan Batabyal</title>
+  <title>Fatigue Analysis in Steel Structures</title>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      }
+    };
+  </script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    table th,
+    table td {
+      border: 1px solid black;
+      padding: 4px;
+    }
+    table th:first-child,
+    table td:first-child {
+      display: none;
+    }
+  </style>
 </head>
 <body>
-  <table>
-    <tr>
-      <td valign="top">
-        <img src="../images/sayan_batabyal.png" alt="Sayan Batabyal" width="160">
-      </td>
-      <td width="40"></td>
-      <td valign="top">
-        <h1>Sayan Batabyal</h1>
-        <p>Analysis Engineer - Structures<br>Caterpillar Inc.</p>
-        <p>
-          <a href="mailto:sayan.batabyal@cat.com">sayan.batabyal@cat.com</a><br>
-          <a href="https://www.linkedin.com/in/sayan-batabyal/?isSelfProfile=true">linkedin/sayan-batabyal</a>
-        </p>
-      </td>
-    </tr>
-  </table>
 
   <hr>
   <p><a href="../index.html">&larr; Back to main page</a></p>
 
-  <h2 id="fatigue-analysis">Fatigue Analysis</h2>
+  <h1 id="fatigue-analysis">Fatigue Analysis in Steel Structures</h2>
   
-  <p>Fatigue analysis estimates the damage that repeated or fluctuating stresses accumulate in a component. These estimates help engineers 
-    assess service life and make informed material and design choices. This article uses a synthetic stress history to demonstrate the 
-    analysis workflow, from identifying stress cycles to estimating their contribution to total damage.</p>
-  
-  <h3 id="fatigue">Fatigue</h3>
-  Fatigue is defined as the deterioration of the structural properties of a material owing to damage caused by cyclic or fluctuating 
-  stresses. A characteristic of fatigue is the damage and loss of strength caused by cyclic stresses, with each stress much too weak to 
-  break the material. The formal definition of fatigue stated by the American Society for Testing and Materials (ASTM) <a href="#refer_1">[1]</a>
-  is as follows:
-  <blockquote>
-    The process of progressive localized permanent structural change occurring in a material subject to conditions that produce 
-    fluctuating stresses and strains at some point or points and that may culminate in cracks or complete fracture after a sufficient number 
-    of fluctuations.
-  </blockquote>
+  <p>Fatigue analysis estimates the damage that repeated or fluctuating stresses accumulate in a component. These estimates help engineers assess service life and make informed material and design choices. This article uses a synthetic stress history to demonstrate the analysis workflow, from identifying stress cycles to estimating their contribution to total damage.</p>
 
+  <h3 id="strength">Strength and Failure</h3>
+  Strength is commonly characterized by the tensile yield stress, $\sigma_\mathrm{y}$, at which plastic deformation initiates and unrestricted plastic flow begins. It may also be expressed in terms of the ultimate tensile stress, $\sigma_\mathrm{ult}$, the maximum stress attained following yielding and substantial plastic deformation. Strain hardening is typically accompanied by an increase in strength until the ultimate tensile stress is reached, as illustrated in <em>Figure 1</em>.
+  <figure style="text-align: center;">
+    <img src="../images/fatigue_analysis/fatigue_01.png" alt="Stress-Strain Curve" width="30%" style="display: block; margin: 0 auto;">
+    <figcaption><strong>Figure 1:</strong> Stress-strain curve for a typical steel material <a href="#refer_1">[1]</a></figcaption>
+  </figure>
+  A structure may fail for several reasons. Failure can occur once the applied stress exceeds the yield stress, $\sigma_\mathrm{y}$, particularly in brittle materials, or the ultimate tensile stress, $\sigma_\mathrm{ult}$, leading to substantial plastic deformation. However, stresses below $\sigma_\mathrm{y}$ can still cause failure when the structure is subjected to repeated or fluctuating loading over time, a mechanism known as fatigue.
+
+  <h3 id="fatigue">Fatigue</h3>
+  Fatigue describes the progressive deterioration of a material's structural properties under cyclic or fluctuating stresses. Although each stress cycle is individually insufficient to cause rupture, repeated cycles can reduce strength and eventually lead to crack initiation or fracture. The American Society for Testing and Materials (ASTM) defines fatigue as follows <a href="#refer_2">[2]</a>:
+  <blockquote>
+    The process of progressive localized permanent structural change occurring in a material subject to conditions that produce fluctuating stresses and strains at some point or points and that may culminate in cracks or complete fracture after a sufficient number of fluctuations.
+  </blockquote>
+  Fatigue develops gradually at localized areas subjected to cyclic stresses and strains, but failure may occur suddenly without visible warning. Local concentrations caused by load transfer, geometric discontinuities, temperature gradients, residual stresses, or material defects can initiate and propagate damage. Fatigue failure progresses through three stages:
+  <ol>
+    <li>Crack Initiation</li>
+    <li>Crack Propagation (Crack growth)</li>
+    <li>Ultimate failure (Fracture)</li>
+  </ol>
+  Fatigue is classified as high-cycle fatigue when low, primarily elastic stresses cause failure after typically more than a certain number of cycles, and as low-cycle fatigue when stresses exceed the yield strength and produce significant plastic deformation. <br>  
+  Fatigue begins at an internal or surface flaw at a location of stress concentration. Cyclic slip along crystallographic planes produces intrusions and extrusions that gradually develop into a crack. The crack initially advances along one of these slip planes, then turns to grow perpendicular to the principal normal stress until the remaining section fractures suddenly (refer to <em>Figure 2</em> and <em>Figure 3</em>). This mechanism is particularly hazardous because a single load application produces no apparent damage, while conventional stress analysis may therefore incorrectly indicate that the structure is safe.
+  <div style="display: flex; justify-content: center; align-items: flex-end; gap: 20px;">
+    <figure style="text-align: center; width: 300px; margin: 0;">
+      <img src="../images/fatigue_analysis/fatigue_02.jpeg" alt="Fatigue crack initiation" width="300" height="300" style="display: block; margin: 0 auto; object-fit: contain;">
+      <figcaption><strong>Figure 2:</strong> Crack surface showing fatigue growth</figcaption>
+    </figure>
+    <figure style="text-align: center; width: 300px; margin: 0;">
+      <img src="../images/fatigue_analysis/fatigue_03.jpeg" alt="Fatigue crack propagation" width="300" height="300" style="display: block; margin: 0 auto; object-fit: contain;">
+      <figcaption><strong>Figure 3:</strong> Crack surface showing fatigue growth</figcaption>
+    </figure>
+  </div>
+
+  <h3 id="damage-calculation-01">Damage calculation from stress cycle</h3>
+  The fatigue of materials subjected to cyclic loading is dependent upon not only the maximum stress level encountered, but also the range of the stresses applied. Generally, the greater the maximum stress and range, the greater the damage encountered.
+  <figure style="text-align: center;">
+    <img src="../images/fatigue_analysis/fatigue_06.png" alt="Cyclic-Stress-Range" width="30%" style="display: block; margin: 0 auto;">
+    <figcaption><strong>Figure 4:</strong> Cyclic Stress Range and definiions</figcaption>
+  </figure>
+  Fatigue life is the number of stress cycles required to initiate a fatigue crack and subsequently fracture a component. It depends on the stress level and state, cyclic waveform, environment, and material condition. <br>
+  For any material sample, the relationship between stress amplitude and fatigue life (in terms of number of cycles) can be shown on a linear or logarithmic scale. Fatigue life increases as stress amplitude decreases. For some materials, the curve approaches a horizontal endurance limit; below this limit, the material can theoretically withstand an infinite number of cycles.
+  <figure style="text-align: center;">
+    <img src="../images/fatigue_analysis/fatigue_04.png" alt="S-N Curve samples" width="30%" style="display: block; margin: 0 auto;">
+    <figcaption><strong>Figure 5:</strong> S-N curves of ASTM A-36 and AISI 4340 based on HCF data <a href="#refer_3">[3]</a></figcaption>
+  </figure>
+  For many materials, a piecewise linear model can be fit to the S-N data expressed in the log-log domain. In this model, each linear piece is formulated by the Basquin expression: $\sigma_\mathrm{a} = \sigma'_\mathrm{f}(2\mathrm{{N_f}^b})$, where $\sigma_\mathrm{a}$ is the stress amplitude, $\sigma'_\mathrm{f}$ is usually referred to as the fatigue strength coefficient, $\mathrm{N_f}$ is the fatigue life, and $\mathrm{b}$ is Basquin’s exponent. In engineering terms, we often write it as: $\mathrm{N_f} \cdot \mathrm{S^m} = \mathrm{C}$ or $\mathrm{S} = \left(\frac{\mathrm{C}}{\mathrm{N_f}}\right)^{1/\mathrm{m}}$ where $\mathrm{S}$ is the stress amplitude, $\mathrm{m}$ is the Basquin's exponent, and $\mathrm{C}$ is a material constant. If the stress amplitude is known, the corresponding fatigue life can be obtained from the piecewise linear model. The estimated fatigue life is then used to compute damage values. Damage is usually defined as the inverse of the fatigue life, $\mathrm{D} = \frac{1}{\mathrm{N_f}}$. The total damage is then computed as the sum of the damage values for all stress cycles. The total damage can be used to estimate the remaining fatigue life of a component or structure. <br>
+  For our demonstration, we have taken the Basquin's exponent as $\mathrm{m} = 3.0$, and the material constant as $\mathrm{C} = 2.0 \times 10^{11}$.
+  <figure style="text-align: center;">
+    <img src="../images/fatigue_analysis/fatigue_05.png" alt="S-N Curve" width="30%" style="display: block; margin: 0 auto;">
+    <figcaption><strong>Figure 6:</strong> S-N curve for demonstration (log-log plot) </figcaption>
+  </figure>
+  <div style="max-width: 760px; margin: 20px 0; border: 1px solid #d0d7de; border-radius: 8px; background: #f6f8fa;">
+    <pre style="margin: 0; padding: 16px; white-space: pre-wrap; color: #24292f; font-size: 0.9em; line-height: 1.5;"><code># Define typical structural steel S-N curve parameters
+m = 3.0           # Fatigue exponent
+C = 2.0e11        # Material constant (MPa scale)
+# Stress cycles from 10^3 to 10^8
+life = np.logspace(3, 8, 500)
+# Correct Basquin relation: S = (C / N)**(1/m)
+stress_amplitude = (C / life) ** (1 / m)
+# Plot the S-N curve
+plt.figure(figsize=(6, 4))
+plt.loglog(life, stress_amplitude, label=r'$N_f \cdot S^3 = 2 \times 10^{11}$')
+plt.xlabel(r"Fatigue life, $N_f$")
+plt.ylabel(r"Stress amplitude, $\sigma_a$ (MPa)")
+plt.title("S-N Curve (Corrected Basquin Relation)")
+plt.grid(True, which="both", linestyle=':', alpha=0.6)
+plt.legend()
+plt.tight_layout()
+plt.show()</code></pre>
+  </div>
+
+  <h3 id="damage-calculation-02">Damage calculation from variable stress cycles</h3>
+  For variable amplitude loading, the damage calculation becomes more complex. The stress history is first analyzed to identify individual stress cycles, which may vary in amplitude and mean stress. Once damage from each individual stress cycle is calculated, the total damage can be computed using Palmgren-Miner's rule, which states that the total damage is the sum of the damage contributions from each cycle. The total damage can be expressed as:
+  <div>
+    \[\mathrm{D_total} = \sum_{\mathrm{i}=1}^{\mathrm{N}} {\mathrm{D_i}} = \sum_{\mathrm{i}=1}^{\mathrm{N}} \frac{\mathrm{n_i}}{\mathrm{N_{f,i}}}\]
+  </div>
+  where $\mathrm{D_total}$ is the total damage, $\mathrm{n_i}$ is the number of cycles at a specific stress level, and $\mathrm{N_{f,i}}$ is the fatigue life corresponding to that stress level.
+  <figure style="text-align: center;">
+    <img src="../images/fatigue_analysis/fatigue_07.png" alt="variable-loading" width="30%" style="display: block; margin: 0 auto;">
+    <figcaption><strong>Figure 7:</strong> Damage calculation for variable stress cycles </figcaption>
+  </figure>
   
-  
-  
-  
-  
-  
-        <!-- <h3>Equation demo</h3>
-      <p>Miner's cumulative damage:</p>
-      <div>
-        \[D = \sum_{i=1}^{N} \frac{n_i}{N_{f,i}}\]
-      </div> -->
+  <h3 id="damage-calculation-03">Damage calculation from variable stress amplitudes</h3>
+  For a more general scenario, the stress history may contain cycles with varying amplitudes and mean stresses. In this case, the damage calculation involves identifying the stress cycles, determining their corresponding damage values, and summing the damage contributions from each cycle. The Rainflow Counting algorithm is a widely used method to identify and count stress cycles in a fluctuating stress history. It helps to determine the number of cycles at different stress levels, which can then be used to compute the corresponding damage values based on the S-N curve. The total damage is calculated by summing the damage contributions from all identified cycles, allowing engineers to assess the overall fatigue life of the structure under variable loading conditions. As an example, let's build a synthetic stress history to illustrate the fatigue analysis workflow. The stress history is shown in <em>Figure 8</em> and consists of a series of fluctuating stresses over time:
+  <figure style="text-align: center;">
+    <img src="../images/fatigue_analysis/fatigue_08.png" alt="Synthetic Stress Dataset" width="40%" style="display: block; margin: 0 auto;">
+    <figcaption><strong>Figure 8:</strong> Synthetic Stress Dataset </figcaption>
+  </figure>
+  <div style="max-width: 760px; margin: 20px 0; border: 1px solid #d0d7de; border-radius: 8px; background: #f6f8fa;">
+    <pre style="margin: 0; padding: 16px; white-space: pre-wrap; color: #24292f; font-size: 0.9em; line-height: 1.5;"><code>np.random.seed(42)
+# Generate time series representing a loading duration
+time = np.linspace(0, 100, 1000)  # 1000 points representing simulated time
+# Define multiple signal components representing variable amplitude loading
+low_freq_trend = 10 * np.sin(2 * np.pi * 0.05 * time)
+mid_freq_fluctuation = 60 * np.sin(2 * np.pi * 0.2 * time) * np.cos(2 * np.pi * 0.02 * time)
+high_freq_noise = np.random.normal(loc=0, scale=15, size=len(time))
+# Combine components to form the final stress history (in MPa)
+stress_history = low_freq_trend + mid_freq_fluctuation + high_freq_noise</code></pre>
+  </div>
+
+  <h3 id="fatigue-workflow">Fatigue Analysis Workflow</h3>
+  The objective of fatigue analysis is to calculate fatigue life from a stress time series and compute the total damage. The task can be divided into two main parts:
+  <ol>
+    <li>Rainflow counting</li>
+    <li>Find total damage based on the Wohler curve and the Palmgren-Miner rule</li>
+  </ol>
+  Rainflow counting is used to extract the number of cycles $\mathrm{n_i}$ and the stress amplitude $\sigma_\mathrm{i}$ from the stress history applied to the component. The rainflow counting consists of following steps:
+  <ol>
+    <li>Hysteresis filtering: Remove cycles whose contribution to the total damage is insignificant.</li>
+    <li>Peak-valley filtering: Identify the local maxima and minima in the stress history to create a sequence of peaks and valleys.</li>
+    <li>Cycle counting: Apply the Rainflow Counting algorithm to the peak-valley sequence to identify and count the stress cycles, including their amplitudes and mean stresses.</li>
+    <li>Damage calculation: For each identified cycle, calculate the corresponding damage using the S-N curve and Palmgren-Miner's rule, then sum the damage contributions from all cycles to obtain the total damage.</li>
+  </ol>
+  Let's understand each step of Rainflow counting in detail.
+
+  <h4>Hysteresis Filtering</h4>
+  Hysteresis filtering is a technique used to remove cycles from the stress history that have a negligible contribution to the total damage. It takes input a threshold in addition to the stress history.
+  <figure style="text-align: center;">
+    <img src="../images/fatigue_analysis/fatigue_09.png" alt="hysteresis filtering" width="40%" style="display: block; margin: 0 auto;">
+    <figcaption><strong>Figure 9:</strong> Hysteresis Filtering Technique </figcaption>
+  </figure>
+  We have applied Hysteresis Filtering to our synthetic dataset and plotted a particular section of the entire time history:
+  <figure style="text-align: center;">
+    <img src="../images/fatigue_analysis/fatigue_10.png" alt="hysteresis filtering" width="40%" style="display: block; margin: 0 auto;">
+    <figcaption><strong>Figure 10:</strong> Hysteresis Filtering applied to our Synthetic dataset </figcaption>
+  </figure>
+  <div style="max-width: 760px; margin: 20px 0; border: 1px solid #d0d7de; border-radius: 8px; background: #f6f8fa;">
+    <pre style="margin: 0; padding: 16px; white-space: pre-wrap; color: #24292f; font-size: 0.9em; line-height: 1.5;"><code>def hysteresis_filter(signal, threshold):
+    ## Removes small fluctuations smaller than the threshold
+    if len(signal) == 0:
+        return np.array([])
+    filtered = [signal[0]]
+    for value in signal[1:]:
+        if abs(value - filtered[-1]) >= threshold:
+            filtered.append(value)
+    return np.array(filtered)</code></pre>
+  </div>
+
+  <h4>Peak Valley Filtering</h4>
+  Peak-valley filtering is a technique used to identify the local maxima (peaks) and minima (valleys) in the stress history. This process simplifies the stress history by creating a sequence of peaks and valleys, which can then be used for cycle counting. <br>
+  We applied Peak-Valley Filtering to our filtered synthetic dataset and plotted a particular section of the entire time history:
+  <figure style="text-align: center;">
+    <img src="../images/fatigue_analysis/fatigue_11.png" alt="peak-valley filtering" width="40%" style="display: block; margin: 0 auto;">
+    <figcaption><strong>Figure 11:</strong> Peak-Valley Filtering applied to our filtered synthetic dataset </figcaption>
+  </figure>
+    <div style="max-width: 760px; margin: 20px 0; border: 1px solid #d0d7de; border-radius: 8px; background: #f6f8fa;">
+    <pre style="margin: 0; padding: 16px; white-space: pre-wrap; color: #24292f; font-size: 0.9em; line-height: 1.5;"><code>def peak_valley_filter(signal):
+    ## Keeps only local maxima and minima, removing intermediate points
+    if len(signal) < 3:
+        return np.array(signal)
+    filtered = [signal[0]]
+    for i in range(1, len(signal) - 1):
+        prev_val, curr_val, next_val = signal[i-1], signal[i], signal[i+1]
+        # Check if the current point is a local peak or valley
+        if (curr_val > prev_val and curr_val > next_val) or (curr_val < prev_val and curr_val < next_val):
+            filtered.append(curr_val)
+    filtered.append(signal[-1])
+    return np.array(filtered)</code></pre>
+  </div>
+
+  <h4>Rainflow Cycle Counting</h4>
+  <ol>
+    <li>Rotate the loading history 90° clockwise, placing the earliest point at the top. The result resembles a series of roofs.</li>
+    <li>Peak valley filtering has removed all intermediate points and retained only successive peaks and valleys. These points mark stress reversals.</li>
+    <li>Imagine rain falling from each peak on the right-hand side of the rotated history.</li>
+    <li>Continue each rainflow until one of these conditions is reached:
+      <ul>
+        <li>It reaches the end of the history.</li>
+        <li>It meets an earlier rainflow falling from above.</li>
+        <li>It reaches a peak equal to or greater than the starting peak.</li>
+      </ul>
+    </li>
+    <li>Repeat the process for the valleys.</li>
+    <li>For every extracted half-cycle, calculate the stress range: $\Delta\sigma = \sigma_{\max} - \sigma_{\min}$</li>
+    <li>Pair equal and opposite half-cycles to form complete cycles.</li>
+    <li>Count the paired cycles and retain any unmatched half-cycles as residual cycles.</li>
+  </ol>
+  <div style="display: flex; justify-content: center; align-items: flex-end; gap: 20px;">
+    <figure style="text-align: center; width: 300px; margin: 0;">
+      <img src="../images/fatigue_analysis/fatigue_12.jpg" alt="Rainflow for peaks" width="140%" style="display: block; margin: 0 auto; object-fit: contain;">
+      <figcaption><strong>Figure 12:</strong> Rainflow for peaks</figcaption>
+    </figure>
+    <figure style="text-align: center; width: 300px; margin: 0;">
+      <img src="../images/fatigue_analysis/fatigue_13.jpg" alt="Rainflow for valleys" width="140%" style="display: block; margin: 0 auto; object-fit: contain;">
+      <figcaption><strong>Figure 13:</strong> Rainflow for valleys</figcaption>
+    </figure>
+  </div>
+  <br>
+  The cycle information can be summarized in a table, which includes the cycle number, stress range, mean stress, and the number of cycles for each identified cycle:
+  <table style="border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th style="border: 1px solid black; padding: 4px;">Cycle ID</th>
+        <th style="border: 1px solid black; padding: 4px;">Min Stress Index</th>
+        <th style="border: 1px solid black; padding: 4px;">Min Time Point (hr)</th>
+        <th style="border: 1px solid black; padding: 4px;">Min Stress (MPa)</th>
+        <th style="border: 1px solid black; padding: 4px;">Max Stress Index</th>
+        <th style="border: 1px solid black; padding: 4px;">Max Time Point (hr)</th>
+        <th style="border: 1px solid black; padding: 4px;">Max Stress (MPa)</th>
+        <th style="border: 1px solid black; padding: 4px;">Stress Range (MPa)</th>
+        <th style="border: 1px solid black; padding: 4px;">Allowable Cycles ($\mathrm{N_f}$)</th>
+        <th style="border: 1px solid black; padding: 4px;">Damage Contribution ($\mathrm{D_i}$)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>63</td><td>37</td><td>3.704</td><td>-73.740</td><td>234</td><td>23.423</td><td>94.900</td><td>168.640</td><td>41701</td><td>2.398e-05</td></tr>
+      <tr><td>227</td><td>708</td><td>70.871</td><td>-80.230</td><td>738</td><td>73.874</td><td>74.280</td><td>154.510</td><td>54215</td><td>1.844e-05</td></tr>
+      <tr><td>108</td><td>442</td><td>44.244</td><td>-57.870</td><td>284</td><td>28.428</td><td>86.860</td><td>144.730</td><td>65969</td><td>1.516e-05</td></tr>
+      <tr><td>165</td><td>544</td><td>54.455</td><td>-79.120</td><td>561</td><td>56.156</td><td>64.410</td><td>143.530</td><td>67645</td><td>1.478e-05</td></tr>
+      <tr><td>224</td><td>933</td><td>93.393</td><td>-78.220</td><td>961</td><td>96.196</td><td>63.790</td><td>142.010</td><td>69835</td><td>1.432e-05</td></tr>
+      <tr><td>211</td><td>760</td><td>76.076</td><td>-76.110</td><td>785</td><td>78.579</td><td>64.680</td><td>140.790</td><td>71673</td><td>1.395e-05</td></tr>
+      <tr><td>126</td><td>485</td><td>48.549</td><td>-74.050</td><td>515</td><td>51.552</td><td>61.330</td><td>135.390</td><td>80589</td><td>1.241e-05</td></tr>
+      <tr><td>54</td><td>216</td><td>21.622</td><td>-55.530</td><td>59</td><td>5.906</td><td>64.380</td><td>119.920</td><td>115982</td><td>8.622e-06</td></tr>
+      <tr><td>210</td><td>815</td><td>81.582</td><td>-54.660</td><td>836</td><td>83.684</td><td>60.000</td><td>114.670</td><td>132656</td><td>7.538e-06</td></tr>
+      <tr><td>163</td><td>668</td><td>66.867</td><td>-53.790</td><td>691</td><td>69.169</td><td>58.530</td><td>112.320</td><td>141152</td><td>7.085e-06</td></tr>
+      <tr><td>48</td><td>163</td><td>16.316</td><td>-49.060</td><td>179</td><td>17.918</td><td>53.650</td><td>102.710</td><td>184594</td><td>5.417e-06</td></tr>
+      <tr><td>101</td><td>307</td><td>30.731</td><td>-46.990</td><td>420</td><td>42.042</td><td>54.540</td><td>101.520</td><td>191131</td><td>5.232e-06</td></tr>
+      <tr><td>153</td><td>587</td><td>58.759</td><td>-43.730</td><td>614</td><td>61.462</td><td>48.650</td><td>92.380</td><td>253684</td><td>3.942e-06</td></tr>
+      <tr><td>37</td><td>79</td><td>7.908</td><td>-39.760</td><td>113</td><td>11.311</td><td>41.850</td><td>81.610</td><td>368023</td><td>2.717e-06</td></tr>
+      <tr><td>207</td><td>861</td><td>86.186</td><td>-23.250</td><td>909</td><td>90.991</td><td>53.530</td><td>76.780</td><td>441781</td><td>2.264e-06</td></tr>
+    </tbody>
+  </table>
+  <br>
+  A histogram plot of the stress ranges can also be generated to visualize the distribution of stress cycles and their corresponding damage contributions:
+  <figure style="text-align: center;">
+    <img src="../images/fatigue_analysis/fatigue_14.png" alt="hist-rainflow-counting" width="30%" style="display: block; margin: 0 auto;">
+    <figcaption><strong>Figure 14:</strong> Histogram of Stress Ranges from Rainflow Counting</figcaption>
+  </figure>
+  <div style="max-width: 760px; margin: 20px 0; border: 1px solid #d0d7de; border-radius: 8px; background: #f6f8fa;">
+    <pre style="margin: 0; padding: 16px; white-space: pre-wrap; color: #24292f; font-size: 0.9em; line-height: 1.5;"><code>def cycle_counting(extrema):
+    ## Custom simplified cycle counting (One-Range Counting)
+    ## Identifies cycles based on matching successive ranges
+    points = list(extrema)
+    cycles = []
+    i = 0
+    while i < len(points) - 2:
+        # Calculate successive ranges
+        range1 = abs(points[i+1] - points[i])
+        range2 = abs(points[i+2] - points[i+1])
+        if range2 >= range1:
+            # Record a cycle
+            mean = (points[i] + points[i+1]) / 2.0
+            cycles.append((range1, mean))
+            # Remove the pair that formed the cycle
+            points.pop(i+1)
+            points.pop(i)
+            # Reset pointer to evaluate the context again
+            i = max(0, i - 1)
+        else:
+            i += 1
+    return cycles</code></pre>
+  </div>
+
+  Finally, as we get the damage contribution from each cycle, we can compute the total damage using Palmgren-Miner's rule. Inverting the total damage gives us the estimated fatigue life of the component under the given stress history. This comprehensive workflow allows engineers to assess the fatigue performance of steel structures and make informed decisions regarding design and maintenance.
+  <div style="max-width: 760px; margin: 20px 0; border: 1px solid #d0d7de; border-radius: 8px; background: #f6f8fa;">
+    <pre style="margin: 0; padding: 16px; white-space: pre-wrap; color: #24292f; font-size: 0.9em; line-height: 1.5;"><code># Calculate and display cumulative damage
+total_damage = damage_df["Damage Contribution (D_i)"].sum()
+print(f"Total Cumulative Fatigue Damage (D): {total_damage:.3e}")
+if total_damage > 0:
+    estimated_lifetime_hours = 1.0 / total_damage
+    print(f"Estimated fatigue life under this stress profile: {estimated_lifetime_hours:,.0f} hours")</code></pre>
+  </div>
+
+  <p>
+    The complete workflow is uploaded in jupyter notebook format on <a href="fatigue_analysis.ipynb" target="_blank">fatigue_analysis.ipynb</a>.
+  </p>
+
+
 
 
 
   <h3 id="references">References</h3>
   <ol>
     <li id="refer_1">
-      ASTM E1049-85, <a href="https://store.astm.org/e1049-85r17.html" target="_blank">"Standard Practices for Cycle Counting in Fatigue Analysis."</a>
-      West Conshohocken, PA: ASTM International, 2017.
+      Sargazi, Omid, <a href="https://www.bbaconsultants.com/en-ca/publications/advanced-fatigue-analysis-steel-structures" target="_blank">"Understanding Fatigue in Steel Structures: Fundamentals and Prevention Strategies"</a>
+    </li>
+    <li id="refer_2">
+      ASTM E1049-85, <a href="https://store.astm.org/e1049-85r17.html" target="_blank">"Standard Practices for Cycle Counting in Fatigue Analysis."</a> West Conshohocken, PA: ASTM International, 2017.
+    </li>
+    <li id="refer_3">
+      Fatigue Life LLC, <a href="https://fatigue-life.com/high-cycle-fatigue/" target="_blank">"High Cycle Fatigue"</a> 
     </li>
   </ol>
 
